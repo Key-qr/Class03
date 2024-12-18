@@ -1,0 +1,101 @@
+# Importar librerías necesarias
+import pandas as pd
+
+# Datos iniciales de la empresa
+data = {
+    "ID": [1, 2, 3, 4],
+    "Nombre": ["Juan Pérez", "Ana Gómez", "Luis Ramírez", "María Torres"],
+    "Departamento": ["Ventas", "Marketing", "TI", "Recursos Humanos"],
+    "Cargo": ["Gerente", "Analista", "Desarrollador", "Coordinador"],
+    "Salario": [50000, 45000, 60000, 48000],
+}
+
+# Crear un DataFrame con los datos
+df = pd.DataFrame(data)
+
+# Funciones para interactuar con los datos
+def mostrar_empleados():
+    print("\n--- Lista de Empleados ---")
+    print(df)
+
+def agregar_empleado():
+    nuevo_id = int(input("Ingrese el ID: "))
+    nombre = input("Ingrese el nombre: ")
+    departamento = input("Ingrese el departamento: ")
+    cargo = input("Ingrese el cargo: ")
+    salario = float(input("Ingrese el salario: "))
+    nuevo_empleado = {"ID": nuevo_id, "Nombre": nombre, "Departamento": departamento, "Cargo": cargo, "Salario": salario}
+    global df
+    df = df.append(nuevo_empleado, ignore_index=True)
+    print("\nEmpleado agregado con éxito.")
+
+def buscar_empleado():
+    nombre = input("Ingrese el nombre del empleado a buscar: ")
+    resultado = df[df["Nombre"].str.contains(nombre, case=False, na=False)]
+    if not resultado.empty:
+        print("\n--- Resultado de la búsqueda ---")
+        print(resultado)
+    else:
+        print("No se encontró ningún empleado con ese nombre.")
+
+def filtrar_por_departamento():
+    departamento = input("Ingrese el departamento: ")
+    resultado = df[df["Departamento"].str.contains(departamento, case=False, na=False)]
+    if not resultado.empty:
+        print("\n--- Empleados en el Departamento ---")
+        print(resultado)
+    else:
+        print("No se encontraron empleados en ese departamento.")
+
+def actualizar_salario():
+    empleado_id = int(input("Ingrese el ID del empleado para actualizar el salario: "))
+    nuevo_salario = float(input("Ingrese el nuevo salario: "))
+    global df
+    if empleado_id in df["ID"].values:
+        df.loc[df["ID"] == empleado_id, "Salario"] = nuevo_salario
+        print("\nSalario actualizado con éxito.")
+    else:
+        print("No se encontró ningún empleado con ese ID.")
+
+def eliminar_empleado():
+    empleado_id = int(input("Ingrese el ID del empleado a eliminar: "))
+    global df
+    if empleado_id in df["ID"].values:
+        df = df[df["ID"] != empleado_id]
+        print("\nEmpleado eliminado con éxito.")
+    else:
+        print("No se encontró ningún empleado con ese ID.")
+
+# Menú principal
+def menu():
+    while True:
+        print("\n--- Menú Principal ---")
+        print("1. Mostrar empleados")
+        print("2. Agregar empleado")
+        print("3. Buscar empleado")
+        print("4. Filtrar por departamento")
+        print("5. Actualizar salario")
+        print("6. Eliminar empleado")
+        print("7. Salir")
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+            mostrar_empleados()
+        elif opcion == "2":
+            agregar_empleado()
+        elif opcion == "3":
+            buscar_empleado()
+        elif opcion == "4":
+            filtrar_por_departamento()
+        elif opcion == "5":
+            actualizar_salario()
+        elif opcion == "6":
+            eliminar_empleado()
+        elif opcion == "7":
+            print("Saliendo del programa.")
+            break
+        else:
+            print("Opción no válida, intente nuevamente.")
+
+# Ejecutar el programa
+menu()
