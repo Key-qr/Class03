@@ -1,0 +1,36 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+
+void yyerror(const char *s);
+int yylex();
+%}
+
+%token NUM
+%token PLUS TIMES
+%token LPAREN RPAREN
+
+%%
+
+expr    : expr PLUS term   { printf("Suma: %d + %d = %d\n", $1, $3, $1 + $3); $$ = $1 + $3; }
+        | term            { $$ = $1; }
+        ;
+
+term    : term TIMES factor { printf("Multiplicación: %d * %d = %d\n", $1, $3, $1 * $3); $$ = $1 * $3; }
+        | factor           { $$ = $1; }
+        ;
+
+factor  : NUM             { $$ = $1; }
+        | LPAREN expr RPAREN { $$ = $2; }
+        ;
+
+%%
+
+void yyerror(const char *s) {
+    fprintf(stderr, "Error: %s\n", s);
+}
+
+int main() {
+    printf("Ingrese una expresión matemática:\n");
+    return yyparse();
+}
