@@ -1,0 +1,37 @@
+package cibertec;
+
+import java.util.Scanner;
+public class VentaYogurt {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		int preciobotella;
+		int cantidadbotella;
+		double importecompra, primerdescuento, segundodescuento, descuentototal, pagar, obsequio;
+		
+		System.out.println("Hola soy Isi, calculare el descuento de tu compra");
+		System.out.println("Ingrese el precio de la botella de yogurt: ");
+		preciobotella=scanner.nextInt();
+		System.out.println("Ingrese la cantidad de botellas: ");
+		cantidadbotella=scanner.nextInt();
+		
+		importecompra=preciobotella*cantidadbotella;
+		primerdescuento=(importecompra)*0.06;
+		segundodescuento=(importecompra-primerdescuento)*0.08;
+		descuentototal=(primerdescuento+segundodescuento);
+		pagar=(importecompra-descuentototal);
+		obsequio=3*cantidadbotella;
+		
+		System.out.println("El importe de compra es " + importecompra);
+		System.out.println("El descuento total es " + descuentototal);
+		System.out.println("El pago de tu compra es de " + pagar);
+		System.out.println("Tenemos caramelos de regalo para ti, por tu compra recibiras: " + obsequio);
+		System.out.println("Gracias por usar nuestra plataforma!");
+		
+	}
+	
+	
+	
+	
+
+}
+
